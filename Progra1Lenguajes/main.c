@@ -2,6 +2,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct nodo{
+    int codigoEmpleado;
+    char nombre[];
+    char apellido[];
+    char departamento[];
+    int codigoProyecto;
+    nodo *sig;
+}empleado;
+empleado *cabezaEmp=NULL;
+
+typedef struct nodo{
+    int codigoProyecto;
+    char nombre[];
+    int anioInicio;
+    int anioFin;
+    nodo *sig;
+}proyecto;
+proyecto *cabezaPro=NULL;
+
+typedef struct nodo{
+    int codigoActividad;
+    char descripcion[];
+    int avance;
+    int codigoProyecto;
+    nodo*sig;
+}actividad;
+actividad *cabezaAct= NULL;
+
 void agregarEmpleado(){
     
 }
@@ -42,7 +70,6 @@ void consultarProyecto(){
 void consultarEmpleado(){
     
 }
-
 
 int main() {
     int opcion,estado=1;
