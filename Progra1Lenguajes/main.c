@@ -1,4 +1,4 @@
-
+//Librerias a utilizar
 #include <stdio.h>
 #include <stdlib.h>
 
