@@ -14,11 +14,37 @@ void agregarActividad(){
     
 }
 void agregar(){
+    int opcionAgregar;
+    printf("\nSelecciones alguna de las opciones\n");
+    printf("1 para agregar un empleado\n2 para agregar un proyecto\n3 para agregar una actividad\n");
+    scanf("%d",&opcionAgregar);
+    switch(opcionAgregar){
+        //Si elige la opcion 1, se agrega un numero, y ademas se suma 1 a variable longitud para tener control del tamano de la pila
+        case 1: agregarEmpleado();
+                break;
+        //Si elige la opcion 2, se elimina el numero en tope y se le resta 1 a variable longitud
+        case 2: agregarProyecto();
+                break;
+        case 3: agregarActividad();
+                break;
+        default: printf("Utilice solo las opciones validas\n");
+    }
+}
+
+void modificarActividad(){
+    
+}
+
+void consultarProyecto(){
+    
+}
+
+void consultarEmpleado(){
     
 }
 
 
-int main(int argc, char** argv) {
+int main() {
     int opcion,estado=1;
     //El menu se repetira infinitas veces hasta que el usuario digite la opcion para salir
     while(estado==1){
@@ -29,18 +55,15 @@ int main(int argc, char** argv) {
         switch(opcion){
                 //Si elige la opcion 1, se agrega un numero, y ademas se suma 1 a variable longitud para tener control del tamano de la pila
                 case 1: agregar();
-                                longitud++;
-                                break;
+                        break;
                 //Si elige la opcion 2, se elimina el numero en tope y se le resta 1 a variable longitud
-                case 2: eliminar();
+                case 2: modificarActividad();
                         break;
-                case 3: 
+                case 3: consultarProyecto();
                         break;
-                case 4: imprimir();
+                case 4: consultarEmpleado();
                         break;
-                case 5: top();
-                        break;
-                case 6:	estado=0;
+                case 5:	estado=0;
                         break;
                 default: printf("Utilice solo las opciones validas\n");
             }
