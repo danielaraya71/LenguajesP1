@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Estructura donde se guardan temporalmente los datos de empleados
 typedef struct nodo{
     int codigoEmpleado;
     char nombre[];
@@ -12,6 +13,7 @@ typedef struct nodo{
 }empleado;
 empleado *cabezaEmp=NULL;
 
+//Estructura donde se guardan temporalmente los datos de proyectos
 typedef struct nodo{
     int codigoProyecto;
     char nombre[];
@@ -21,6 +23,7 @@ typedef struct nodo{
 }proyecto;
 proyecto *cabezaPro=NULL;
 
+//Estructura donde se guardan temporalmente los datos de actividades
 typedef struct nodo{
     int codigoActividad;
     char descripcion[];
