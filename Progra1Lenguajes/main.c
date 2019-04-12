@@ -1,18 +1,17 @@
 //Librerias a utilizar
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> //se utiliza para generar numero aleatorio
+#include <string.h>
 
-//Estructura donde se guardan temporalmente los datos de empleados
 typedef struct nodoEmp{
     int codigoEmpleado;
-    int nombre[50];
+    char nombre[50];
     char apellido[50];
     char departamento[50];
     int codigoProyecto;
     struct nodoEmp* sig;
-}empleado;
-empleado *cabezaEmp=NULL;
+}Empleado;
+Empleado *cabezaEmp=NULL;
 
 //Estructura donde se guardan temporalmente los datos de proyectos
 typedef struct nodoPro{
@@ -20,9 +19,10 @@ typedef struct nodoPro{
     char nombre[50];
     int anioInicio;
     int anioFin;
+    Empleado nodoEmpleado;
     struct nodoPro* sig;
-}proyecto;
-proyecto *cabezaPro=NULL;
+}Proyecto;
+Proyecto *cabezaPro=NULL;
 
 //Estructura donde se guardan temporalmente los datos de actividades
 typedef struct nodoAct{
@@ -31,18 +31,17 @@ typedef struct nodoAct{
     int avance;
     int codigoProyecto;
     struct nodoAct* sig;
-}actividad;
-actividad *cabezaAct= NULL;
+}Actividad;
+Actividad *cabezaAct= NULL;
 
 int cantidadEmp=0;
 int cantidadPro=0;
 int cantidadAct=0;
 
 void agregarEmpleado(){
-    //TODAVIA FALTA LO DE CODIGO EMPLEADO, ESTE SE DEBE DE GENERAR AUTOMATICAMENTE
     
     //SE CREA NUEVO NODO TIPO EMPLEADO Y SE LE AGREGAN SUS DATOS
-    empleado* nuevo=(empleado*)malloc(sizeof(nuevo));
+    Empleado* nuevo=(Empleado*)malloc(sizeof(nuevo));
     printf("Digite su nombre\n");
     scanf("%s",&nuevo->nombre);
     printf("Digite su apellido\n");
@@ -64,33 +63,73 @@ void agregarEmpleado(){
         cabezaEmp=nuevo;
     }
     cantidadEmp++;
+    printf("\nEmpleado agregado con exito\n");
+}
+
+void imprimir(){
+    
 }
 
 void agregarProyecto(){
+    //Se verifica que existan al menos 2 empleados registrados
     if(cantidadEmp>=2){
-        proyecto *nuevo=(proyecto*)malloc(sizeof(nuevo));
-        printf("Digite el nombre del proyecto\n");
-        scanf("%s",&nuevo->nombre);
-        printf("Digite el anio de inicio\n");
-        scanf("%d",&nuevo->anioInicio);
-        printf("Digite el anio de finalizacion\n");
-        scanf("%d",&nuevo->anioFin);
-        if(nuevo.anioFin>=nuevo.anioInicio){
-            int empleados=0;
-            while(empleados==0){
-                printf("Ingrese el nombre del empleado para el proyecto\n");
-                
-                //BUSCAR UN EMPLEADO EN LA LISTA
+    //Se crear un nuevo nodo para el proyecto y para el empleado, y se introducen los datos del proyecto, exceptuando la lista de empleados y actividades
+        Proyecto *proyecto=(Proyecto*)malloc(sizeof(proyecto));
+        Empleado *nodoEmpleado=(Empleado*)malloc(sizeof(nodoEmpleado));
+        printf("Ingrese el nombre del proyecto\n");
+        scanf("%s",&proyecto->nombre);
+        int anioInicio, anioFin;
+        printf("Ingrese el anio de inicio del proyecto\n");
+        scanf("%s",&anioInicio);
+        printf("Ingrese el anio de fin del proyecto\n");
+        scanf("%s",&anioFin);
+        if(anioInicio<anioFin){
+            proyecto->codigoProyecto=cantidadPro;
+            int verificador=0, cantEmpleados=0;
+            //El nodo auxiliar sirve para recorrer la lista global de empleados
+            Empleado *auxEmpleado= cabezaEmp;
+            while(verificador==0){
+                char nombre[50]; 
+                printf("Ingrese el nombre del empleado\n");
+                scanf("%s",&nombre);
+                while(auxEmpleado != NULL){
+            //Se busca el nombre del empleado con el nodo auxiliar
+                    if(strcmp(auxEmpleado->nombre,nombre)==0){
+                        strcpy(nodoEmpleado->nombre,auxEmpleado->nombre);
+                        strcpy(nodoEmpleado->apellido,auxEmpleado->apellido);
+                        strcpy(nodoEmpleado->departamento,auxEmpleado->departamento);
+                        nodoEmpleado->codigoEmpleado=auxEmpleado->codigoEmpleado;
+                        nodoEmpleado->codigoProyecto=proyecto->codigoProyecto;
+                        cantEmpleados++;
+                        
+                        if(cabezaEmp==NULL){
+                            cabezaEmp=nodoEmpleado;
+                            cabezaEmp->sig=NULL;
+                        }
+                        else{
+                            cabezaEmp->sig=cabezaEmp;
+                            cabezaEmp=nodoEmpleado;
+                        }
+                        
+                        printf("Empleado agregado con exito\n");
+                       
+                    }
+                    auxEmpleado=auxEmpleado->sig;
+                }
+                printf("Presione 0 si desea ingresar mas empleados\n");
+                scanf("%i",&verificador);
+            }
+            if(cantEmpleados>=2){
+                if(cabezaPro==NULL){
+                    cabezaPro=proyecto;
+                    cabezaPro->sig=NULL;
+                }
+                else{
+                    cabezaPro->sig=cabezaPro;
+                    cabezaPro=proyecto;
+                }
             }
         }
-        else{
-            printf("El anio de inicio no puede ser mayor al anio de fin");
-        }
-        
-        //DESPUES DE ESTO SE DEBEN DE AGREGAR DATOS A LISTA
-    }
-    else{
-        printf("No hay suficientes empleados registrados");
     }
 }
 
