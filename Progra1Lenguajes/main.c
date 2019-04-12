@@ -1,6 +1,7 @@
 //Librerias a utilizar
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h> //se utiliza para generar numero aleatorio
 
 //Estructura donde se guardan temporalmente los datos de empleados
 typedef struct nodoEmp{
@@ -33,6 +34,10 @@ typedef struct nodoAct{
 }actividad;
 actividad *cabezaAct= NULL;
 
+int cantidadEmp=0;
+int cantidadPro=0;
+int cantidadAct=0;
+
 void agregarEmpleado(){
     //TODAVIA FALTA LO DE CODIGO EMPLEADO, ESTE SE DEBE DE GENERAR AUTOMATICAMENTE
     
@@ -46,8 +51,8 @@ void agregarEmpleado(){
     scanf("%s",&nuevo->departamento);
     
     //ESTOS LOS PUSE NADA MAS PARA PROBAR
-    nuevo->codigoEmpleado=1;
-    nuevo->codigoProyecto=1;
+    nuevo->codigoEmpleado=cantidadEmp;
+    nuevo->codigoProyecto=NULL;
     
     //Si la pila esta vacia se agrega en el tope y si no, se coloca encima del que sea el tope
     if(cabezaEmp==NULL){
@@ -58,10 +63,35 @@ void agregarEmpleado(){
         nuevo->sig=cabezaEmp;
         cabezaEmp=nuevo;
     }
+    cantidadEmp++;
 }
 
 void agregarProyecto(){
-    
+    if(cantidadEmp>=2){
+        proyecto *nuevo=(proyecto*)malloc(sizeof(nuevo));
+        printf("Digite el nombre del proyecto\n");
+        scanf("%s",&nuevo->nombre);
+        printf("Digite el anio de inicio\n");
+        scanf("%d",&nuevo->anioInicio);
+        printf("Digite el anio de finalizacion\n");
+        scanf("%d",&nuevo->anioFin);
+        if(nuevo.anioFin>=nuevo.anioInicio){
+            int empleados=0;
+            while(empleados==0){
+                printf("Ingrese el nombre del empleado para el proyecto\n");
+                
+                //BUSCAR UN EMPLEADO EN LA LISTA
+            }
+        }
+        else{
+            printf("El anio de inicio no puede ser mayor al anio de fin");
+        }
+        
+        //DESPUES DE ESTO SE DEBEN DE AGREGAR DATOS A LISTA
+    }
+    else{
+        printf("No hay suficientes empleados registrados");
+    }
 }
 
 void agregarActividad(){
