@@ -70,10 +70,10 @@ void agregarEmpleado(){
 }
 
 void imprimir(){
-    Empleado *nodoEmpleado= cabezaEmp;
-    while(nodoEmpleado != NULL){
-        printf("%s\n",nodoEmpleado->nombre);
-        nodoEmpleado=nodoEmpleado->sig;
+    Actividad *nodo= cabezaAct;
+    while(nodo != NULL){
+        printf("%d\n",nodo->avance);
+        nodo=nodo->sig;
     }
 }
 
@@ -138,6 +138,7 @@ void agregarProyecto(){
                 }
                 printf("Proyecto agregado con exito\n");
                 cantidadPro++;
+                printf("El codigo del proyecto es: %d",cabezaPro->codigoProyecto);
             }
             else{
                 printf("El proyecto no cuenta con los suficientes empleados\n");
@@ -150,6 +151,7 @@ void agregarProyecto(){
 }
 
 void agregarActividad(){
+    imprimir();
     if(cantidadPro>0){
         Actividad *nodoAct=(Actividad*)malloc(sizeof(nodoAct));
         printf("Digite el codigo del proyecto al que pertenece la actividad\n");
@@ -176,8 +178,11 @@ void agregarActividad(){
             cabezaAct=nodoAct;
         }
         printf("Actividad agregada con exito\n");
-        printf("El codigo de la actividad es: %d\n",cabezaAct->codigoProyecto);
+        printf("El codigo de la actividad es: %d\n",cabezaAct->codigoActividad);
         cantidadAct++;
+    }
+    else{
+        printf("No existen proyectos por el momento\n");
     }
 }
 void agregar(){
@@ -199,8 +204,27 @@ void agregar(){
 }
 
 void modificarActividad(){
-    
+    if(cantidadAct>0){
+        int codigoPro,codigoAct;
+        printf("Digite el codigo del proyecto al que desea acceder\n");
+        scanf("%d",&codigoPro);
+        printf("Digite el codigo de la activdad que desea modificar\n");
+        scanf("%d",&codigoAct);
+        Actividad *auxAct=(Actividad*)malloc(sizeof(Actividad));
+        auxAct=cabezaAct;
+        while(auxAct != NULL){
+            if(auxAct->codigoProyecto==codigoPro){
+                if(auxAct->codigoActividad==codigoAct){
+                    printf("Digite el avance que lleva la actividad\n");
+                    scanf("%d",&auxAct->avance);
+                    printf("Avance actualizado con exito\n");
+                }
+            }
+            auxAct=auxAct->sig;
+        }
+    }
 }
+
 
 void consultarProyecto(){
     
