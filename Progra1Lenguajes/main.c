@@ -11,6 +11,8 @@ typedef struct nodoEmp{
     int codigoProyecto;
     struct nodoEmp* sig;
 }Empleado;
+
+
 Empleado *cabezaEmp=NULL;
 
 //Estructura donde se guardan temporalmente los datos de proyectos
@@ -19,9 +21,9 @@ typedef struct nodoPro{
     char nombre[50];
     int anioInicio;
     int anioFin;
-    Empleado nodoEmpleado;
     struct nodoPro* sig;
 }Proyecto;
+
 Proyecto *cabezaPro=NULL;
 
 //Estructura donde se guardan temporalmente los datos de actividades
@@ -32,6 +34,7 @@ typedef struct nodoAct{
     int codigoProyecto;
     struct nodoAct* sig;
 }Actividad;
+
 Actividad *cabezaAct= NULL;
 
 int cantidadEmp=0;
@@ -67,7 +70,11 @@ void agregarEmpleado(){
 }
 
 void imprimir(){
-    
+    Empleado *nodoEmpleado= cabezaEmp;
+    while(nodoEmpleado != NULL){
+        printf("%s\n",nodoEmpleado->nombre);
+        nodoEmpleado=nodoEmpleado->sig;
+    }
 }
 
 void agregarProyecto(){
@@ -85,14 +92,16 @@ void agregarProyecto(){
         scanf("%s",&anioFin);
         if(anioInicio<anioFin){
             proyecto->codigoProyecto=cantidadPro;
-            int verificador=0, cantEmpleados=0;
+            int cantEmpleados=0;
+            int verificador=0;
             //El nodo auxiliar sirve para recorrer la lista global de empleados
-            Empleado *auxEmpleado= cabezaEmp;
             while(verificador==0){
+                Empleado *auxEmpleado= cabezaEmp;
                 char nombre[50]; 
                 printf("Ingrese el nombre del empleado\n");
                 scanf("%s",&nombre);
                 while(auxEmpleado != NULL){
+                    
             //Se busca el nombre del empleado con el nodo auxiliar
                     if(strcmp(auxEmpleado->nombre,nombre)==0){
                         strcpy(nodoEmpleado->nombre,auxEmpleado->nombre);
@@ -107,16 +116,15 @@ void agregarProyecto(){
                             cabezaEmp->sig=NULL;
                         }
                         else{
-                            cabezaEmp->sig=cabezaEmp;
+                            nodoEmpleado->sig=cabezaEmp;
                             cabezaEmp=nodoEmpleado;
                         }
-                        
                         printf("Empleado agregado con exito\n");
                        
                     }
                     auxEmpleado=auxEmpleado->sig;
                 }
-                printf("Presione 0 si desea ingresar mas empleados\n");
+                printf("Digite 0 si desea ingresar mas empleados\n");
                 scanf("%i",&verificador);
             }
             if(cantEmpleados>=2){
@@ -125,16 +133,52 @@ void agregarProyecto(){
                     cabezaPro->sig=NULL;
                 }
                 else{
-                    cabezaPro->sig=cabezaPro;
+                    proyecto->sig=cabezaPro;
                     cabezaPro=proyecto;
                 }
+                printf("Proyecto agregado con exito\n");
+                cantidadPro++;
+            }
+            else{
+                printf("El proyecto no cuenta con los suficientes empleados\n");
             }
         }
+    }
+    else{
+        printf("No es posible crear un proyecto, ya que no existen los suficientes empleados\n");
     }
 }
 
 void agregarActividad(){
-    
+    if(cantidadPro>0){
+        Actividad *nodoAct=(Actividad*)malloc(sizeof(nodoAct));
+        printf("Digite el codigo del proyecto al que pertenece la actividad\n");
+        scanf("%d",&nodoAct->codigoProyecto);
+        printf("Digite el nombre o descripcion de la actividad\n");
+        scanf("%s",&nodoAct->descripcion);
+        nodoAct->avance=0;
+        int actividadesProyecto=1;
+        Actividad *auxAct= cabezaAct;
+        while(auxAct != NULL){
+            if(auxAct->codigoProyecto==nodoAct->codigoProyecto){
+                actividadesProyecto++;
+            }
+            auxAct=auxAct->sig;
+        }
+        nodoAct->codigoActividad=actividadesProyecto;
+        
+        if(cabezaAct==NULL){
+            cabezaAct=nodoAct;
+            cabezaAct->sig=NULL;
+        }
+        else{
+            nodoAct->sig=cabezaAct;
+            cabezaAct=nodoAct;
+        }
+        printf("Actividad agregada con exito\n");
+        printf("El codigo de la actividad es: %d\n",cabezaAct->codigoProyecto);
+        cantidadAct++;
+    }
 }
 void agregar(){
     int opcionAgregar;
